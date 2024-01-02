@@ -1,21 +1,16 @@
 import sys
-from utils.chooseAccessType import chooseAccessType
 
-
-def program(typeUser: str):
-    print(typeUser)
-
+from utils.dentist import dentist
+from utils.frontDesk import frontDesk
 
 def main():
     args = sys.argv[1:]
 
     if (len(args)):
         if args[0] == "dentist":
-            return program(args[0])
+            dentist()
         elif args[0] == "frontDesk":
-            return program(args[0])
-
-    program(chooseAccessType())
+            frontDesk()
 
 
 if __name__ == "__main__":
