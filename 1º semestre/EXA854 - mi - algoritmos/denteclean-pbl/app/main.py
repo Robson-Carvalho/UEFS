@@ -1,7 +1,7 @@
 import sys
 
-from utils.dentist import dentist
-from utils.frontDesk import frontDesk
+from dentist import dentist
+from frontDesk import frontDesk
 
 def main():
     args = sys.argv[1:]

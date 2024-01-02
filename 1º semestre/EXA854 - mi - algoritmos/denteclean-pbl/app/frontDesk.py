@@ -1,13 +1,20 @@
-import subprocess
 import os
+import subprocess
+
+from utils.clearTerminal import clearTerminal
+
+from classes.FrontDesk import FrontDesk
 
 os.system('cls' if os.name == 'nt' else 'clear')
+
+
+frontDeskProfessional = FrontDesk()
 
 def frontDesk():
   menu = 0
   while menu != 3:
     try:
-        menu = int(input("Programa da Recepção\n\n1 - Recepção\n2 - Dentista\n3 - Sair\n\nEscolha uma opção: "))        
+        menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n\n3 - Sair\n\nEscolha uma opção: "))        
 
         if menu != 1 and menu != 2 and menu != 3:
           os.system('cls' if os.name == 'nt' else 'clear')
@@ -18,11 +25,18 @@ def frontDesk():
 
     if menu == 1:
       os.system('cls' if os.name == 'nt' else 'clear')
-      print("Programa da Recepção\n\noi")
-    if menu == 2:
+      print("Programa da Recepção - Criação de sessão\n")
+
+      frontDeskProfessional.beginSession()
+
+      clearTerminal()
+    
+    elif menu == 2:
       os.system('cls' if os.name == 'nt' else 'clear')
-      print("oi")
-    if menu == 3:
+
+      clearTerminal()
+    
+    elif menu == 3:
       print("\nEncerrando sessão\n")
     
       os.system('cls' if os.name == 'nt' else 'clear')
@@ -41,6 +55,8 @@ def frontDesk():
         except Exception as e:
           print(f"Ocorreu um erro: {e}")
 
+
+    
 
 
     
