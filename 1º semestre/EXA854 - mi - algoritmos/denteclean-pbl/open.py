@@ -5,7 +5,6 @@ program_to_run = './app/main.py'
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
-
 i = 0
 print("Seja bem-vindo ao sistema da Denteclean\n")
 while i != 1 and i != 2 and i != 3:
