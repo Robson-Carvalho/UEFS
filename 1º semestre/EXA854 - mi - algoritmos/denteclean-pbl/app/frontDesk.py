@@ -4,11 +4,10 @@ import subprocess
 from utils.clearTerminal import clearTerminal
 from utils.getData import getData
 from utils.getSchedule import getSchedule
+from utils.validateCPF import validateCPF
 
 from classes.FrontDesk import FrontDesk
-
-os.system('cls' if os.name == 'nt' else 'clear')
-
+from classes.Patient import Patient
 
 frontDeskProfessional = FrontDesk()
 
@@ -16,9 +15,9 @@ def frontDesk():
   menu = 0
   while menu != 9:
     try:
-        menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n9 - Sair\n\nEscolha uma opção: "))        
+        menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Cadastrar paciente\n9 - Sair\n\nEscolha uma opção: "))        
 
-        if menu != 1 and menu != 2 and menu != 3 or menu != 4 or menu != 5:
+        if menu != 1 and menu != 2 and menu != 3 or menu != 4 or menu != 5 and menu != 6:
           os.system('cls' if os.name == 'nt' else 'clear')
           print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
     except:
@@ -121,7 +120,6 @@ def frontDesk():
 
       clearTerminal()
 
-
     elif menu == 5:
       os.system('cls' if os.name == 'nt' else 'clear')
       print("Programa da Recepção - Iniciando sessão\n")
@@ -132,7 +130,33 @@ def frontDesk():
 
       clearTerminal()
 
+    elif menu == 6:
+      os.system('cls' if os.name == 'nt' else 'clear')
+      print("Programa da Recepção - Cadastro de paciente\n")
 
+      name = ""
+      while len(name) <= 2:
+        name = input("Digite o nome do paciente: ")
+
+        if len(name) <= 2:
+          print("\nNome precisa ter 3 caracteres! Por favor, tente novamente.\n")
+
+      
+      cpf = False
+      while cpf == False:
+        cpf = input("\nDigite o cpf do paciente: ")
+        cpf = validateCPF(cpf)
+
+        if cpf == False:
+         print("\nCPF inválido! Por favor, tente novamente.")
+
+      patient = Patient(0, name, cpf)
+
+      patient.Create()
+      
+      print(f"\nPaciente {name} cadastrado com sucesso!")
+
+      clearTerminal()
 
     elif menu == 9:
       print("\nEncerrando sessão\n")
