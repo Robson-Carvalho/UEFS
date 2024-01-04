@@ -10,8 +10,6 @@ class FrontDesk(Clinica):
 
         sessao.Criar()
 
-        print("\nSessão criada com sucesso!")
-
     def ListarSessoes(self):
         sessoes = Sessao.BuscarTodos(self)
 
@@ -36,35 +34,6 @@ class FrontDesk(Clinica):
 
             print("-----------------------------------------")
 
-    def BuscarSessao(self, data, horario):
-      sessao = Sessao.Buscar(self, data, horario)
-
-      if not sessao:
-        print("Não há sessão com esse horário e data")
-      else:
-        print("\nDetalhes da Sessão:")
-        print(f"ID da Sessão: {sessao.id}")
-        print(f"Data: {sessao.data}")
-        print(f"Horário: {sessao.horario}")
-        print(f"Atendimento: {sessao.atendendo}")
-
-        # Mostrar detalhes da fila de atendimento
-        print("\nFila de Atendimento:")
-        for paciente_id in sessao.fila_de_atendimento:
-            print(f"ID do Paciente: {paciente_id}")
-            # Adicione lógica para buscar e mostrar detalhes do paciente se necessário
-
-        # Mostrar detalhes dos consultados
-        print("\nConsultados:")
-        for consultado_id in sessao.consultados:
-            print(f"ID do Consultado: {consultado_id}")
-            # Adicione lógica para buscar e mostrar detalhes do consultado se necessário
-
-        # Mostrar detalhes da fila de pacientes
-        print("\nFila de Pacientes:")
-        for paciente_id in sessao.fila_de_pacientes:
-            print(f"ID do Paciente: {paciente_id}")
-            # Adicione lógica para buscar e mostrar detalhes do paciente se necessário
 
     def ConsultasDaSessao(self, data, horario):
         sessao = Sessao.Buscar(self, data, horario)
@@ -91,7 +60,6 @@ class FrontDesk(Clinica):
 
             paciente.Criar()
 
-            print(f"\nPaciente {nome} cadastrado com sucesso!")
 
     def MarcarHorarioDoPaciente(self, idSessao, cpf):
         paciente = Paciente.BuscarPeloCPF(self, cpf)
@@ -122,7 +90,28 @@ class FrontDesk(Clinica):
 
         Sessao.MarcarHorarioDoPaciente(self, idSessao, paciente)
 
+    def ListarPacientes(self):
+        pacientes = Paciente.BuscarTodos(self)
 
+        if not pacientes:
+            print("\nNão há pacientes cadastrados")
+        else:
+            print("\nTabela de Pacientes:")
+            print("---------------------------------------------------")
+            print(f" ID | {'Nome':25}    |  CPF ")
+            print("---------------------------------------------------")
+
+            for paciente in pacientes:
+                id = paciente.id
+                nome = paciente.nome
+                cpf = paciente.cpf
+
+                print(f" {id:2} | {nome:25}    | {cpf} ")
+
+            print("---------------------------------------------------")
+
+    def  ListarHorariosPaciente():
+        print("Oi")
 
 
 

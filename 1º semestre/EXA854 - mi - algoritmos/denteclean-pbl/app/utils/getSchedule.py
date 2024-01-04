@@ -23,16 +23,5 @@ def getSchedule():
       except ValueError:
           print("\nValor inválido! Por favor, digite um número válido.\n")
 
-  start = True
-  while start:
-      try:
-          second = int(input("Digite os segundos (0-59): "))
-          if 0 <= second <= 59:
-              start = False
-          else:
-              print("\nOs segundos devem estar entre 0 e 59. Tente novamente.\n")
-      except ValueError:
-          print("\nValor inválido! Por favor, digite um número válido.\n")
-
-  return f"{hour:02d}:{minute:02d}:{second:02d}"
+  return f"{hour:02d}:{minute:02d}:{0:02d}"
 

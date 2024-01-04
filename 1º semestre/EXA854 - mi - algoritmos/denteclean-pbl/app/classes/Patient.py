@@ -1,5 +1,7 @@
 import json
 
+from database.utils import LerPacienteBancoDeDados
+from database.utils import SalvarPacienteBancoDeDados
 class Paciente:
     def __init__(self, id, nome, cpf, prontuario=None):
         self.id = id
@@ -24,17 +26,21 @@ class Paciente:
         novoPaciente.id = novoID
         pacientes.append(novoPaciente)
 
-        with open("patients.json", 'w') as file:
-            json.dump([paciente.__dict__ for paciente in pacientes], file)
+
+        resultado = SalvarPacienteBancoDeDados(pacientes)
+
+        if resultado == 1:
+            print("\nPaciente criado com sucesso!")
+
+        if resultado == 2:
+            print("\nErro ao criar paciente!")
+
+        if resultado == 3:
+            print("\nPaciente não fornecida!")
+
 
     def BuscarTodos(self):
-      try:
-        with open("patients.json", 'r') as file:
-          pacientes = json.load(file)
-        resultado = [Paciente(**paciente) for paciente in pacientes]
-        return resultado
-      except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            return []
+        return LerPacienteBancoDeDados(Paciente)
 
     def BuscarPeloCPF(self, cpf):
         pacientes = Paciente.BuscarTodos(self)
