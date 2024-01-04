@@ -23,4 +23,16 @@ def getData():
     except ValueError:
       print("\nValor inválido! Por favor, digite um número válido.\n")
 
-  return f"{day:02d}/{month:02d}/{datetime.now().year}"
+  start = True
+  while start:
+    try:
+      anoAtual = datetime.now().year
+      year = int(input("Digite o número do ano: "))
+      if 2000 <= year <= anoAtual:
+          start = False
+      else:
+          print(f"\nO número deve estar entre 2000 e {anoAtual}. Tente novamente.\n")
+    except ValueError:
+      print("\nValor inválido! Por favor, digite um número válido.\n")
+
+  return f"{day:02d}/{month:02d}/{year:02d}"

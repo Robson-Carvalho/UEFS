@@ -1,39 +1,39 @@
 import json
 
-class Patient:
+class Paciente:
     def __init__(self, id, nome, cpf, prontuario=None):
         self.id = id
         self.nome = nome
         self.cpf = cpf
         self.prontuario = prontuario or []
 
-    def Create(self):
-        patients = self.GetAllPatient()
+    def Criar(self):
+        pacientes = self.BuscarTodos()
 
-        if not patients:
-            sumID = 0
+        if not pacientes:
+            somarID = 0
         else:
             try:
-                sumID = patients[-1].id
+                somarID = pacientes[-1].id
             except AttributeError:
-                sumID = -1
+                somarID = -1
 
-        newID = sumID + 1
+        novoID = somarID + 1
 
-        new_patient = Patient(newID, self.nome, self.cpf, [])
-        new_patient.id = newID
-        patients.append(new_patient)
+        novoPaciente = Paciente(novoID, self.nome, self.cpf, [])
+        novoPaciente.id = novoID
+        pacientes.append(novoPaciente)
 
         with open("patients.json", 'w') as file:
-            json.dump([patient.__dict__ for patient in patients], file)
+            json.dump([paciente.__dict__ for paciente in pacientes], file)
 
 
-    def GetAllPatient(self):
+    def BuscarTodos(self):
       try:
         with open("patients.json", 'r') as file:
-          patients_data = json.load(file)
-        patients = [Patient(**patient) for patient in patients_data]
-        return patients
+          pacientes = json.load(file)
+        resultado = [Paciente(**paciente) for paciente in pacientes]
+        return resultado
       except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
             return []
 

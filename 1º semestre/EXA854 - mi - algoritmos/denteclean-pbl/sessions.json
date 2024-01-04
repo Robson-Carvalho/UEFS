@@ -1,1 +1,20 @@
-[{"id": 1, "data": "02/02/2024", "horario": "02:02:02", "atendendo": true, "fila_de_atendimento": [{}], "fila_de_pacientes": [{}], "consultados": [{}]}]
+[
+    {
+        "id": 1,
+        "data": "02/02/2000",
+        "horario": "02:02:02",
+        "atendendo": false,
+        "fila_de_atendimento": [],
+        "fila_de_pacientes": [],
+        "consultados": []
+    },
+    {
+        "id": 2,
+        "data": "03/03/2000",
+        "horario": "03:03:03",
+        "atendendo": true,
+        "fila_de_atendimento": [],
+        "fila_de_pacientes": [],
+        "consultados": []
+    }
+]

@@ -1,38 +1,86 @@
-import json
+from.Clinic import Clinica
+from.Session import Sessao
+from.Patient import Paciente
 
-from.HealthcareProfessional import HealthcareProfessional
+class FrontDesk(Clinica):
+    def CriarSessao(self, data, horario):
+        sessao = Sessao(0, data, horario)
 
-class FrontDesk(HealthcareProfessional):
-  def createPatient(self):
-    print("\nPaciente criado!\n")
+        sessao.Criar()
 
-  def createSession(self, data, horario):
-        sessions = self.getAllSessions()
+        print("\nSessão criada com sucesso!")
 
-        if not sessions:
-            sessions_obj = [{"id": 1, "data": data, "horario": horario, "atendendo": False, "fila_de_atendimento": [{}], "fila_de_pacientes": [{}], "consultados": [{}]}]
-            with open("sessions.json", 'w') as file:
-                json.dump(sessions_obj, file)
+    def ListarSessoes(self):
+        sessoes = Sessao.BuscarTodos(self)
+
+        if not sessoes:
+            print("Não há sessões")
         else:
-            try:
-                last_session_id = sessions[-1]["id"]
-            except KeyError:
-                last_session_id = -1
+            print("\nTabela de Sessões:")
+            print("-----------------------------------------")
+            print(" ID |    Data    |  Horário | Atendendo")
+            print("-----------------------------------------")
 
-            new_session_id = last_session_id + 1
-            new_session = {"id": new_session_id, "data": data, "horario": horario, "atendendo": False, "fila_de_atendimento": [{}], "fila_de_pacientes": [{}], "consultados": [{}]}
-            sessions.append(new_session)
-          
-            with open("sessions.json", 'w') as file:
-                json.dump(sessions, file)
+            for sessao in sessoes:
+                id = sessao.id
+                data = sessao.data
+                horario = sessao.horario
+                atendendo = sessao.atendendo
+                filaPacientes = sessao.fila_de_pacientes
+                filaAtendimento = sessao.fila_de_atendimento
+                consultados = sessao.consultados
 
-            return new_session_id
+                print(f" {id:2} | {data} | {horario} |  {atendendo}   ")
 
- 
-  def getSession(self, data, horario):
-    sessions = self.getAllSessions()
+            print("-----------------------------------------")
 
-    for session in sessions:
-        if session["data"] == data and session["horario"] == horario:
-            return session
-    return {}
+    def BuscarSessao(self, data, horario):
+      sessao = Sessao.Buscar(self, data, horario)
+
+      if not sessao:
+        print("Não há sessão com esse horário e data")
+      else:
+        print("\nDetalhes da Sessão:")
+        print(f"ID da Sessão: {sessao.id}")
+        print(f"Data: {sessao.data}")
+        print(f"Horário: {sessao.horario}")
+        print(f"Atendimento: {sessao.atendendo}")
+
+        # Mostrar detalhes da fila de atendimento
+        print("\nFila de Atendimento:")
+        for paciente_id in sessao.fila_de_atendimento:
+            print(f"ID do Paciente: {paciente_id}")
+            # Adicione lógica para buscar e mostrar detalhes do paciente se necessário
+
+        # Mostrar detalhes dos consultados
+        print("\nConsultados:")
+        for consultado_id in sessao.consultados:
+            print(f"ID do Consultado: {consultado_id}")
+            # Adicione lógica para buscar e mostrar detalhes do consultado se necessário
+
+        # Mostrar detalhes da fila de pacientes
+        print("\nFila de Pacientes:")
+        for paciente_id in sessao.fila_de_pacientes:
+            print(f"ID do Paciente: {paciente_id}")
+            # Adicione lógica para buscar e mostrar detalhes do paciente se necessário
+
+    def ConsultasDaSessao(self, data, horario):
+        sessao = Sessao.Buscar(self, data, horario)
+
+        if not sessao:
+            print("\nNão há sessão com esse horário e data")
+        else:
+            if not sessao.consultados:
+                print("\nNão houve consultas nesse dia!")
+            else:
+                print("\nConsultados:\n")
+                for consultado_id in sessao.consultados:
+                    print(f"ID do Consultado: {consultado_id}")
+                    # Tarefa - Adicionar lógica para buscar e mostrar detalhes do consultado
+
+    def CadastrarPaciente(self, nome, cpf):
+            paciente = Paciente(0, nome, cpf)
+
+            paciente.Criar()
+
+            print(f"\nPaciente {nome} cadastrado com sucesso!")
