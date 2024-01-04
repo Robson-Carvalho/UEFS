@@ -30,7 +30,6 @@ class Sessao:
         with open("sessions.json", 'w') as file:
             json.dump([sessao.__dict__ for sessao in sessoes], file)
 
-
     def BuscarTodos(self):
         try:
             with open("sessions.json", 'r') as file:
@@ -40,6 +39,16 @@ class Sessao:
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
             return []
 
+    def BuscarPeloID(self, id):
+        sessoes = Sessao.BuscarTodos(self)
+
+        sessaoEncontrada = None
+        for sessao in sessoes:
+            if sessao.id == id:
+                sessaoEncontrada = sessao
+                break
+
+        return sessaoEncontrada
 
     def IniciarAtendimento(self, data, horario):
         sessoes = Sessao.BuscarTodos(self)
@@ -65,7 +74,6 @@ class Sessao:
         else:
             print(f"\nNenhuma sessão encontrada.")
 
-
     def EncerrarAtendimento(self, data, horario):
         sessoes = Sessao.BuscarTodos(self)
 
@@ -83,14 +91,36 @@ class Sessao:
                  json.dump([sessao.__dict__ for sessao in sessoes], file)
 
             except Exception as e:
-                  print(f"Erro ao salvar no arquivo JSON: {e}")
+                  print(f"\nErro ao salvar no arquivo JSON: {e}")
 
             print(f"\nAtendimento encerrado para a sessão com ID {sessao.id}.")
 
         else:
             print(f"\nNenhuma sessão encontrada.")
 
+    def MarcarHorarioDoPaciente(self, idSessao, paciente):
+        sessoes = Sessao.BuscarTodos(self)
 
+        sessaoEncontrada = None
+        for sessao in sessoes:
+            if sessao.id == idSessao:
+                sessaoEncontrada = sessao
+                break
+
+        if sessaoEncontrada:
+            sessaoEncontrada.fila_de_pacientes.append(paciente.id)
+
+            try:
+                with open("sessions.json", 'w') as file:
+                    json.dump([sessao.__dict__ for sessao in sessoes], file)
+
+            except Exception as e:
+                print(f"\nErro ao salvar no arquivo JSON: {e}")
+
+            print(f"\nMarcação de horário para {paciente.nome} realizada com sucesso.")
+
+        else:
+            print(f"\nNenhuma sessão encontrada.")
 
     def Buscar(self, data, horario):
         sessoes = Sessao.BuscarTodos(self)

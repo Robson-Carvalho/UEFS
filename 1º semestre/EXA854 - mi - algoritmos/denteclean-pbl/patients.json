@@ -1,4 +1,1 @@
-[
-    { "id": 1, "nome": "Robson", "cpf": "096.099.645-16", "prontuario": [] },
-    { "id": 2, "nome": "Rodrigo", "cpf": "096.099.645-16", "prontuario": [] }
-]
+[{ "id": 1, "nome": "Robson", "cpf": "096.099.645-16", "prontuario": [] }]

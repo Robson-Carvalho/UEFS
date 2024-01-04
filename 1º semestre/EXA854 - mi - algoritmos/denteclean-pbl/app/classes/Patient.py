@@ -27,7 +27,6 @@ class Paciente:
         with open("patients.json", 'w') as file:
             json.dump([paciente.__dict__ for paciente in pacientes], file)
 
-
     def BuscarTodos(self):
       try:
         with open("patients.json", 'r') as file:
@@ -37,4 +36,17 @@ class Paciente:
       except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
             return []
 
-        
+    def BuscarPeloCPF(self, cpf):
+        pacientes = Paciente.BuscarTodos(self)
+
+        if not pacientes:
+            return None
+
+        for paciente in pacientes:
+            if paciente.cpf == cpf:
+                return paciente
+
+        return None
+
+
+
