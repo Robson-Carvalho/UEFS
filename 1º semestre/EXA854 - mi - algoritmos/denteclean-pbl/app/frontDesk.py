@@ -219,7 +219,7 @@ def frontDesk():
                             if paciente.id == id:
                                 pacienteEscolhido = paciente
 
-                        classFrontDesk.ListarHorariosPaciente(pacienteEscolhido.cpf)
+                        classFrontDesk.VerificarPacienteSessaoAtual(pacienteEscolhido)
 
                         clearTerminal()
                     except:

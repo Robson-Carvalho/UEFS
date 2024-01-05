@@ -120,3 +120,21 @@ class FrontDesk(Clinica):
 
         except Exception as e:
             print(f"{e}")
+
+    def VerificarPacienteSessaoAtual(self, paciente):
+        sessoes = Sessao.BuscarTodos(self)
+
+        if not sessoes:
+            print("\nNão há sessão cadastrada para hoje.")
+            return
+        else:
+            dataAtual = datetime.now()
+            dataAtual = dataAtual.strftime("%d/%m/%Y")
+            for sessao in sessoes:
+                if sessao.data == dataAtual:
+                    if paciente.id in sessao.fila_de_pacientes:
+                        print(f"\nPaciente {paciente.nome} tem horário para sessão de hoje a partir de {sessao.horario}!")
+                        return
+                    else:
+                        print(f"\nPaciente {paciente.nome} não tem horário marcado para sessão de hoje!")
+
