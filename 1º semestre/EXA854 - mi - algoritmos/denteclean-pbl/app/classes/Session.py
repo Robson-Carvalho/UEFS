@@ -19,7 +19,6 @@ class Sessao:
         dataAtual = datetime.now()
         dataAtual = dataAtual.strftime("%d/%m/%Y")
 
-        # Converte a hora atual para o mesmo formato da hora armazenada em self.data
         horarioAtual = datetime.now().time()
         horarioAtual = horarioAtual.strftime("%H:%M:%S")
 
@@ -59,6 +58,14 @@ class Sessao:
 
         if resultado == 3:
             print("\nSessão não fornecida!")
+
+    def Salvar(sessoes):
+        resultado = SalvarSessaoBancoDeDados(sessoes)
+
+        if resultado == 2 or resultado == 3:
+            return False
+
+        return True
 
     def BuscarTodos(self):
         return LerSessoesBancoDeDados(Sessao)

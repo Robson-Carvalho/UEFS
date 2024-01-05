@@ -1,5 +1,7 @@
 import os
 
+from functions.dentistMenu import dentistMenu
+
 from utils.getData import getData
 from utils.getSchedule import getSchedule
 from utils.clearTerminal import clearTerminal
@@ -13,7 +15,7 @@ def dentist():
     start = True
     while start:
         try:
-            menu = int(input(f"Programa do Dentista\n\n{1:02d} - Localizar sessão\n{2:02d} - Iniciar sessão\n0 - Sair\n\nEscolha uma opção: "))
+            menu = int(input(f"Programa do Dentista\n\n1 - Localizar sessão\n2 - Iniciar sessão\n3 - Atender próximo paciente\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -36,6 +38,12 @@ def dentist():
                 classDentist.IniciarAtendimento("", data, horario)
 
                 clearTerminal()
+
+            elif menu == 3:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Programa da Recepção - Atender próximo paciente\n")
+
+                dentistMenu()
 
             elif menu == 0:
                 os.system('cls' if os.name == 'nt' else 'clear')

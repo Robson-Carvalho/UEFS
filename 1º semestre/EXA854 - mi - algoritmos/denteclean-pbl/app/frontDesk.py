@@ -12,8 +12,8 @@ def frontDesk():
     os.system('cls' if os.name == 'nt' else 'clear')
     start = True
     while start:
-        try:
-            menu = int(input(f"Programa da Recepção\n\n{1:02d} - Criar sessão\n{2:02d} - Listar sessões\n{3:02d} - Buscar sessão\n{4:02d} - Consultas de uma sessão\n{5:02d} - Iniciar sessão\n{6:02d} - Encerrar sessão\n{7:02d} - Cadastrar paciente\n{8:02d} - Marca horário para paciente\n{9:02d} - Listar pacientes\n{10:02d} - Horários do paciente\n{11:02d} - Verificar se paciente tem horário na sessão atual\n{12:02d} - Colocar paciente na fila de atendimento\n{13:02d} - Listar próximo paciente da fila de atendimento\n0 - Sair\n\nEscolha uma opção: "))
+
+            menu = int(input(f"Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n11 - Verificar se paciente tem horário na sessão atual\n12 - Colocar paciente na fila de atendimento\n13 - Listar próximo paciente da fila de atendimento\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -155,7 +155,4 @@ def frontDesk():
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
-        except:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print("\nErro! Por favor, tente novamente.\n")
 

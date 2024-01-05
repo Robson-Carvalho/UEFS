@@ -1,6 +1,5 @@
 from database.utils import LerPacienteBancoDeDados
 from database.utils import SalvarPacienteBancoDeDados
-
 class Paciente:
     def __init__(self, id, nome, cpf, prontuario=None):
         self.id = id
@@ -37,6 +36,18 @@ class Paciente:
         if resultado == 3:
             print("\nPaciente não fornecida!")
 
+    def Salvar(pacientes):
+        resultado = SalvarPacienteBancoDeDados(pacientes)
+
+        if resultado == 1:
+            print("\nAnotação salva com sucesso!")
+
+        if resultado == 2:
+            print("\nErro ao salvar anotação!")
+
+        if resultado == 3:
+            print("\nPacientes não fornecidos")
+
     def BuscarTodos(self):
         return LerPacienteBancoDeDados(Paciente)
 
@@ -63,7 +74,5 @@ class Paciente:
                 return paciente
 
         return None
-
-
 
 
