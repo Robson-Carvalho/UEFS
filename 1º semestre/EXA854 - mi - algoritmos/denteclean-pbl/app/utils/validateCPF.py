@@ -4,7 +4,7 @@ def validateCPF(cpf):
 
     # Verifica se o CPF possui 11 dígitos
     if len(cpf) != 11:
-        print("\nValor inválido! O cpf precisa ter 11 dígitos")
+        print("\nValor inválido! O cpf precisa ter 11 dígitos.")
         return False
 
     # Calcula o primeiro dígito verificador

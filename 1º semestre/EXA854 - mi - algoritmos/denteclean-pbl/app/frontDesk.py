@@ -1,7 +1,5 @@
 import os
 
-from utils.getCPF import getCPF
-from utils.validateCPF import validateCPF
 from utils.getData import getData
 from utils.getSchedule import getSchedule
 from utils.clearTerminal import clearTerminal
@@ -32,9 +30,7 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar sessões\n")
 
-
                 classFrontDesk.ListarSessoes()
-
 
                 clearTerminal()
 
@@ -44,7 +40,6 @@ def frontDesk():
 
                 data = getData()
                 horario = getSchedule()
-
 
                 classFrontDesk.BuscarSessao(data, horario)
 
@@ -87,14 +82,9 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Cadastro de paciente\n")
 
-                nome = ""
-                while len(nome) <= 2:
-                    nome = input("Digite o nome do paciente: ")
+                nome = input("Digite o nome paciente: ")
 
-                if len(nome) <= 2:
-                    print("\nNome precisa ter 3 caracteres! Por favor, tente novamente.\n")
-
-                cpf = getCPF()
+                cpf = input("Digite o número do CPF do paciente: ")
 
                 classFrontDesk.CadastrarPaciente(nome, cpf)
 
@@ -104,23 +94,9 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Marca horário para paciente\n")
 
-                idSessao = 0
-                while idSessao == 0:
-                    try:
-                        idSessao = int(input("Digite o id da sessão: "))
+                idSessao = input("Digite o ID da sessão: ")
 
-                        if idSessao <= 0:
-                            print("\nID inválido! Por favor, tente novamente.\n")
-                    except:
-                        print("\nValor inválido! Por favor, tente novamente.\n")
-
-                cpf = False
-                while cpf == False:
-                    cpf = input("\nDigite o cpf do paciente: ")
-                    cpf = validateCPF(cpf)
-
-                if cpf == False:
-                    print("\nCPF inválido! Por favor, tente novamente.")
+                cpf = input("Digite o número do CPF do paciente: ")
 
                 classFrontDesk.MarcarHorarioDoPaciente(idSessao, cpf)
 
@@ -130,22 +106,7 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar pacientes\n")
 
-                pacientes = classFrontDesk.ListarPacientes()
-
-                if not pacientes:
-                    print("\nNão há pacientes cadastrados")
-                else:
-                    print("\nTabela de Pacientes:")
-                    print("---------------------------------------------------")
-                    print(f" ID | {'Nome':25}    |  CPF ")
-                    print("---------------------------------------------------")
-                for paciente in pacientes:
-                    id = paciente.id
-                    nome = paciente.nome
-                    cpf = paciente.cpf
-
-                    print(f" {id:2} | {nome:25}    | {cpf} ")
-                    print("---------------------------------------------------")
+                classFrontDesk.ListarPacientes()
 
                 clearTerminal()
 
@@ -153,79 +114,21 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar horários do paciente\n")
 
-                pacientes = classFrontDesk.ListarPacientes()
+                cpf = input("Digite o número do CPF do paciente: ")
 
-                if not pacientes:
-                    print("\nNão há pacientes cadastrados")
+                classFrontDesk.ListarHorariosPaciente(cpf)
 
-                else:
-                    try:
-                        print("\nTabela de Pacientes:")
-                        print("---------------------------------------------------")
-                        print(f" ID | {'Nome':25}    |  CPF ")
-                        print("---------------------------------------------------")
-                        for paciente in pacientes:
-                            id = paciente.id
-                            nome = paciente.nome
-                            cpf = paciente.cpf
-
-                            print(f" {id:2} | {nome:25}    | {cpf} ")
-                            print("---------------------------------------------------")
-
-                        id = int(input("\nDigite o id do paciente desejado: "))
-
-                        pacienteEscolhido = {}
-
-                        for paciente in pacientes:
-                            if paciente.id == id:
-                                pacienteEscolhido = paciente
-
-                        classFrontDesk.ListarHorariosPaciente(pacienteEscolhido.cpf)
-
-                        clearTerminal()
-                    except:
-                        print("\nNão há paciente cadastrado com esse ID!!")
-                        clearTerminal()
-
+                clearTerminal()
 
             elif menu == 11:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Verifica se paciente tem horário na sessão atual\n")
 
-                pacientes = classFrontDesk.ListarPacientes()
+                cpf = input("Digite o número do CPF do paciente: ")
 
-                if not pacientes:
-                    print("\nNão há pacientes cadastrados")
+                classFrontDesk.VerificarPacienteSessaoAtual(cpf)
 
-                else:
-                    try:
-                        print("\nTabela de Pacientes:")
-                        print("---------------------------------------------------")
-                        print(f" ID | {'Nome':25}    |  CPF ")
-                        print("---------------------------------------------------")
-                        for paciente in pacientes:
-                            id = paciente.id
-                            nome = paciente.nome
-                            cpf = paciente.cpf
-
-                            print(f" {id:2} | {nome:25}    | {cpf} ")
-                            print("---------------------------------------------------")
-
-                        id = int(input("\nDigite o id do paciente desejado: "))
-
-                        pacienteEscolhido = {}
-
-                        for paciente in pacientes:
-                            if paciente.id == id:
-                                pacienteEscolhido = paciente
-
-                        classFrontDesk.VerificarPacienteSessaoAtual(pacienteEscolhido)
-
-                        clearTerminal()
-                    except:
-                        print("\nNão há paciente cadastrado com esse ID!!")
-                        clearTerminal()
-
+                clearTerminal()
 
             elif menu == 0:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -236,5 +139,5 @@ def frontDesk():
                 print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
         except:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print("\nValor inválido! Por favor, tente novamente com as opções fornecidas\n")
+            print("\nErro! Por favor, tente novamente.\n")
 

@@ -1,5 +1,3 @@
-import json
-
 from database.utils import LerPacienteBancoDeDados
 from database.utils import SalvarPacienteBancoDeDados
 class Paciente:
@@ -41,6 +39,18 @@ class Paciente:
 
     def BuscarTodos(self):
         return LerPacienteBancoDeDados(Paciente)
+
+    def BuscarPeloID(self, id):
+        pacientes = Paciente.BuscarTodos(self)
+
+        if not pacientes:
+            return None
+
+        for paciente in pacientes:
+            if paciente.id == id:
+                return paciente
+
+        return None
 
     def BuscarPeloCPF(self, cpf):
         pacientes = Paciente.BuscarTodos(self)

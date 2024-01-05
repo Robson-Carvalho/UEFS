@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from utils.validateCPF import validateCPF
+
 from.Clinic import Clinica
 from.Session import Sessao
 from.Patient import Paciente
@@ -14,7 +16,7 @@ class FrontDesk(Clinica):
         sessoes = Sessao.BuscarTodos(self)
 
         if not sessoes:
-            print("Não há sessões")
+            print("Não há sessões cadastradas")
         else:
             print("\nTabela de Sessões:")
             print("-----------------------------------------")
@@ -26,34 +28,41 @@ class FrontDesk(Clinica):
                 data = sessao.data
                 horario = sessao.horario
                 atendendo = sessao.atendendo
-                filaPacientes = sessao.fila_de_pacientes
-                filaAtendimento = sessao.fila_de_atendimento
-                consultados = sessao.consultados
 
                 print(f" {id:2} | {data} | {horario} |  {atendendo}   ")
 
             print("-----------------------------------------")
 
-
     def ConsultasDaSessao(self, data, horario):
         sessao = Sessao.Buscar(self, data, horario)
 
         if not sessao:
-            print("\nNão há sessão com esse horário e data")
+            print("\nNão há sessão com essa data e horário")
         else:
             if not sessao.consultados:
                 print("\nNão houve consultas nesse dia!")
             else:
-                print("\nConsultados:\n")
+                print("\nTabela de Consultados:")
+                print("---------------------------------------------------")
+                print(f" ID | {'Nome':25}    |  CPF ")
+                print("---------------------------------------------------")
                 for consultado_id in sessao.consultados:
-                    print(f"ID do Consultado: {consultado_id}")
-                    # Tarefa - Adicionar lógica para buscar e mostrar detalhes do consultado
+                    paciente = Paciente.BuscarPeloID(consultado_id)
+
+                    if paciente:
+                        print(f" {id:2} | {paciente.nome:25}    | {paciente.cpf} ")
+                        print("---------------------------------------------------")
 
     def CadastrarPaciente(self, nome, cpf):
+        cpfValidado = validateCPF(cpf)
+
+        if not cpfValidado:
+            return
+
         paciente = Paciente.BuscarPeloCPF(self, cpf)
 
         if paciente:
-            print("\nCPF indisponível! Por favor, tente outro")
+            print("\nCPF está em uso! Por favor, tente novamente")
 
         else:
             paciente = Paciente(0, nome, cpf)
@@ -61,23 +70,34 @@ class FrontDesk(Clinica):
             paciente.Criar()
 
     def MarcarHorarioDoPaciente(self, idSessao, cpf):
+        validacao = validateCPF(cpf)
+
+        try:
+            intIdSessao = int(idSessao)
+        except:
+            print(f"\nValor do id inválido! Tente novamente.")
+            return
+
+        if not validacao:
+            return
+
         paciente = Paciente.BuscarPeloCPF(self, cpf)
 
         if not paciente:
-            print("\nPaciente não cadastrado!")
+            print(f"\nNão há paciente cadastrado com cpf {cpf}!")
             return
 
-        sessao = Sessao.BuscarPeloID(self, idSessao)
+        sessao = Sessao.BuscarPeloID(self, intIdSessao)
 
         if not sessao:
-            print("\nSessão não existe! Por favor, tente novamente.")
+            print(f"\nNão há sessão cadastrada com o id {intIdSessao}")
             return
 
         dataAtual = datetime.now()
         dataAtual = dataAtual.strftime("%d/%m/%Y")
 
         if dataAtual > sessao.data:
-            print("\nSessão indisponível!")
+            print("\nSessão indisponível para marcação de horário!")
             return
 
         totalDePacientesNaSessao = len(sessao.fila_de_atendimento) + len(sessao.consultados) + len(sessao.fila_de_pacientes)
@@ -86,46 +106,78 @@ class FrontDesk(Clinica):
             print(f"\nSessão já está completa! Por favor, criei uma nova sessão para o cadastro de {paciente.nome}")
             return
 
-        Sessao.MarcarHorarioDoPaciente(self, idSessao, paciente)
+        if intIdSessao in sessao.fila_de_pacientes:
+            print(f"\nO paciente {paciente.nome} já tem horário marcado para essa sesão! Por favor, marque para uma próxima sessão.")
+            return
+
+        Sessao.MarcarHorarioDoPaciente(self, intIdSessao, paciente)
 
     def ListarPacientes(self):
         pacientes = Paciente.BuscarTodos(self)
 
-        return pacientes
+        if not pacientes:
+            print("Não há pacientes cadastrados")
+        else:
+            print("Tabela de Pacientes:")
+            print("---------------------------------------------------")
+            print(f" ID | {'Nome':25}    |  CPF ")
+            print("---------------------------------------------------")
+            for paciente in pacientes:
+                id = paciente.id
+                nome = paciente.nome
+                cpf = paciente.cpf
+
+                print(f" {id:2} | {nome:25}    | {cpf} ")
+                print("---------------------------------------------------")
 
     def ListarHorariosPaciente(self, cpf):
-        try:
-            paciente = Paciente.BuscarPeloCPF(self, cpf)
+        validacao = validateCPF(cpf)
 
-            if not paciente:
-                raise ValueError("\nNão há paciente cadastrado com esse ID!")
+        if not validacao:
+            return
 
-            horarios = []
-            sessoes = Sessao.BuscarTodos(self)
+        paciente = Paciente.BuscarPeloCPF(self, cpf)
 
-            for sessao in sessoes:
-                if paciente.id in sessao.fila_de_atendimento or paciente.id in sessao.fila_de_pacientes or paciente.id in sessao.consultados:
-                    horarios.append({"data": sessao.data, "horario": sessao.horario})
+        if not paciente:
+            print(f"\nNão há paciente cadastrado com cpf {cpf}!")
+            return
 
-            if not horarios:
-                raise ValueError("\nNão há horários cadastrados para esse paciente!")
+        horarios = []
+        sessoes = Sessao.BuscarTodos(self)
 
-            print("\nHorários:")
+        for sessao in sessoes:
+            if paciente.id in sessao.fila_de_atendimento or paciente.id in sessao.fila_de_pacientes or paciente.id in sessao.consultados:
+                horarios.append({"data": sessao.data, "horario": sessao.horario})
+
+        if not horarios:
+            print(f"\nNão há horários cadastrados para esse paciente {paciente.nome}")
+            return
+
+
+        print(f"\nHorários do paciente {paciente.nome}:\n")
+        print("-----------------------")
+        print(f" {'Data':9} | Horário")
+        print("-----------------------")
+        for horario in horarios:
+            print(f"{horario['data']} | {horario['horario']}")
             print("-----------------------")
-            print(f" {'Data':9} | Horário")
-            print("-----------------------")
-            for horario in horarios:
-                print(f"{horario['data']} | {horario['horario']}")
-                print("-----------------------")
 
-        except Exception as e:
-            print(f"{e}")
+    def VerificarPacienteSessaoAtual(self, cpf):
+        validacao = validateCPF(cpf)
 
-    def VerificarPacienteSessaoAtual(self, paciente):
+        if not validacao:
+            return
+
+        paciente = Paciente.BuscarPeloCPF(self, cpf)
+
+        if not paciente:
+            print(f"\nNão há paciente cadastrado com o cpf {cpf}")
+            return
+
         sessoes = Sessao.BuscarTodos(self)
 
         if not sessoes:
-            print("\nNão há sessão cadastrada para hoje.")
+            print("\nA clinica ainda não possui nenhuma sessão cadastrada.")
             return
         else:
             dataAtual = datetime.now()
@@ -133,8 +185,11 @@ class FrontDesk(Clinica):
             for sessao in sessoes:
                 if sessao.data == dataAtual:
                     if paciente.id in sessao.fila_de_pacientes:
-                        print(f"\nPaciente {paciente.nome} tem horário para sessão de hoje a partir de {sessao.horario}!")
+                        print(f"\nPaciente {paciente.nome} tem horário para sessão de hoje!")
                         return
                     else:
                         print(f"\nPaciente {paciente.nome} não tem horário marcado para sessão de hoje!")
+                        return
+
+        print("\nNão há sessão cadastrada para hoje.")
 

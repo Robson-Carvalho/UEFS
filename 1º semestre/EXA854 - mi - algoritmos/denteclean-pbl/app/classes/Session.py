@@ -1,12 +1,7 @@
-import os
-
 from datetime import datetime
 
 from database.utils import SalvarSessaoBancoDeDados
 from database.utils import LerSessoesBancoDeDados
-
-script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "database", "sessions.json")
 
 class Sessao:
     def __init__(self, id, data, horario, atendendo = False, fila_de_atendimento = [], fila_de_pacientes = [], consultados = []):
@@ -20,7 +15,6 @@ class Sessao:
 
     def Criar(self):
         sessoes = self.BuscarTodos()
-
 
         dataAtual = datetime.now()
         dataAtual = dataAtual.strftime("%d/%m/%Y")
