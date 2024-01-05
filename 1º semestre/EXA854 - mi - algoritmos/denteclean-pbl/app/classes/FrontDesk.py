@@ -71,21 +71,20 @@ class FrontDesk(Clinica):
         sessao = Sessao.BuscarPeloID(self, idSessao)
 
         if not sessao:
-            print("\nSessão não cadastrado!")
+            print("\nSessão não existe! Por favor, tente novamente.")
             return
-
 
         dataAtual = datetime.now()
         dataAtual = dataAtual.strftime("%d/%m/%Y")
 
-        if dataAtual < sessao.data:
+        if dataAtual > sessao.data:
             print("\nSessão indisponível!")
             return
 
         totalDePacientesNaSessao = len(sessao.fila_de_atendimento) + len(sessao.consultados) + len(sessao.fila_de_pacientes)
 
         if totalDePacientesNaSessao >= 6:
-            print("\nSessão completa! Por favor, criei uma nova sessão para o cadastro de mais pacientes")
+            print(f"\nSessão já está completa! Por favor, criei uma nova sessão para o cadastro de {paciente.nome}")
             return
 
         Sessao.MarcarHorarioDoPaciente(self, idSessao, paciente)
@@ -110,12 +109,30 @@ class FrontDesk(Clinica):
 
             print("---------------------------------------------------")
 
-    def  ListarHorariosPaciente():
-        print("Oi")
+    def ListarHorariosPaciente(self, cpf):
+        try:
+            paciente = Paciente.BuscarPeloCPF(self, cpf)
 
+            if not paciente:
+                raise ValueError("Não há paciente cadastrado com esse CPF!")
 
+            horarios = []
+            sessoes = Sessao.BuscarTodos(self)
 
+            for sessao in sessoes:
+                if paciente.id in sessao.fila_de_atendimento or paciente.id in sessao.fila_de_pacientes or paciente.id in sessao.consultados:
+                    horarios.append({"data": sessao.data, "horario": sessao.horario})
 
+            if not horarios:
+                raise ValueError("Não há horários cadastrados para esse paciente!")
 
+            print("\nHorários:")
+            print("-----------------------")
+            print(f" {'Data':9} | Horário")
+            print("-----------------------")
+            for horario in horarios:
+                print(f"{horario['data']} | {horario['horario']}")
+                print("-----------------------")
 
-
+        except Exception as e:
+            print(f"Erro: {e}")

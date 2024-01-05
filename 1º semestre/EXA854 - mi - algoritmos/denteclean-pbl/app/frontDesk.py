@@ -138,7 +138,9 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar horários do paciente\n")
 
-                classFrontDesk.ListarHorariosPaciente()
+                cpf = getCPF()
+
+                classFrontDesk.ListarHorariosPaciente(cpf)
 
                 clearTerminal()
 
