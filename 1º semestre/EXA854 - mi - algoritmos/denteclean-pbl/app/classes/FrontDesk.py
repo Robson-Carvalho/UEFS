@@ -193,3 +193,43 @@ class FrontDesk(Clinica):
 
         print("\nNão há sessão cadastrada para hoje.")
 
+    def ColocarNaFilaDeAtendimento(self, cpf):
+        validacao = validateCPF(cpf)
+
+        if not validacao:
+            return
+
+        paciente = Paciente.BuscarPeloCPF(self, cpf)
+
+        if not paciente:
+            print(f"\nNão há paciente cadastrado com o cpf {cpf}")
+            return
+
+        sessoes = Sessao.BuscarTodos(self)
+
+        if not sessoes:
+            print("\nA clinica ainda não possui nenhuma sessão cadastrada.")
+            return
+        else:
+            dataAtual = datetime.now()
+            dataAtual = dataAtual.strftime("%d/%m/%Y")
+            for sessao in sessoes:
+                if sessao.data == dataAtual:
+                    if paciente.id in sessao.fila_de_atendimento:
+                        print(f"\nPaciente {paciente.nome} já está na fila de atendimento.")
+                        return
+
+                    if paciente.id in sessao.fila_de_pacientes:
+                        if sessao.atendendo:
+                            Sessao.ColocarNaFilaDeAtendimento(self, sessao.id, paciente)
+                            return
+
+                        else:
+                            print("\nA sessão não está iniciada para atendimento! Por favor, iniciei antes desse procedimento.")
+                            return
+
+                    else:
+                        print(f"\nPaciente {paciente.nome} não está cadastrado para esse sessão!")
+                        return
+
+            print("\nNão há sessão cadastrada para hoje.")

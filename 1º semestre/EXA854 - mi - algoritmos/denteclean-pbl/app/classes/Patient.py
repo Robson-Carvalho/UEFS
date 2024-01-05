@@ -1,5 +1,6 @@
 from database.utils import LerPacienteBancoDeDados
 from database.utils import SalvarPacienteBancoDeDados
+
 class Paciente:
     def __init__(self, id, nome, cpf, prontuario=None):
         self.id = id
@@ -36,7 +37,6 @@ class Paciente:
         if resultado == 3:
             print("\nPaciente não fornecida!")
 
-
     def BuscarTodos(self):
         return LerPacienteBancoDeDados(Paciente)
 
@@ -63,6 +63,7 @@ class Paciente:
                 return paciente
 
         return None
+
 
 
 

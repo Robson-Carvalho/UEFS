@@ -163,3 +163,30 @@ class Sessao:
             if sessao.data == data and sessao.horario == horario:
                 return sessao
         return None
+
+    def ColocarNaFilaDeAtendimento(self, idSessao, paciente):
+        sessoes = Sessao.BuscarTodos(self)
+
+        sessaoEncontrada = None
+
+        for sessao in sessoes:
+            if sessao.id == idSessao:
+                sessaoEncontrada = sessao
+                break
+
+        if sessaoEncontrada:
+            sessaoEncontrada.fila_de_pacientes.remove(paciente.id)
+            sessaoEncontrada.fila_de_atendimento.append(paciente.id)
+
+            resultado = SalvarSessaoBancoDeDados(sessoes)
+
+            if resultado == 1:
+                print(f"\nPaciente {paciente.nome} colocado na fila de atendimento!")
+
+            if resultado == 2:
+                print("\nErro colocar paciente na fila de atendimento!")
+
+            if resultado == 3:
+                print("\nSessão não fornecida!")
+        else:
+            print("\nSessão não encontrada")
