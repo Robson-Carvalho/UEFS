@@ -15,7 +15,7 @@ def frontDesk():
     start = True
     while start:
         try:
-            menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n0 - Sair\n\nEscolha uma opção: "))
+            menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n11 - Verificar se paciente tem horário na sessão atual\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -130,7 +130,22 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar pacientes\n")
 
-                classFrontDesk.ListarPacientes()
+                pacientes = classFrontDesk.ListarPacientes()
+
+                if not pacientes:
+                    print("\nNão há pacientes cadastrados")
+                else:
+                    print("\nTabela de Pacientes:")
+                    print("---------------------------------------------------")
+                    print(f" ID | {'Nome':25}    |  CPF ")
+                    print("---------------------------------------------------")
+                for paciente in pacientes:
+                    id = paciente.id
+                    nome = paciente.nome
+                    cpf = paciente.cpf
+
+                    print(f" {id:2} | {nome:25}    | {cpf} ")
+                    print("---------------------------------------------------")
 
                 clearTerminal()
 
@@ -138,11 +153,79 @@ def frontDesk():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Listar horários do paciente\n")
 
-                cpf = getCPF()
+                pacientes = classFrontDesk.ListarPacientes()
 
-                classFrontDesk.ListarHorariosPaciente(cpf)
+                if not pacientes:
+                    print("\nNão há pacientes cadastrados")
 
-                clearTerminal()
+                else:
+                    try:
+                        print("\nTabela de Pacientes:")
+                        print("---------------------------------------------------")
+                        print(f" ID | {'Nome':25}    |  CPF ")
+                        print("---------------------------------------------------")
+                        for paciente in pacientes:
+                            id = paciente.id
+                            nome = paciente.nome
+                            cpf = paciente.cpf
+
+                            print(f" {id:2} | {nome:25}    | {cpf} ")
+                            print("---------------------------------------------------")
+
+                        id = int(input("\nDigite o id do paciente desejado: "))
+
+                        pacienteEscolhido = {}
+
+                        for paciente in pacientes:
+                            if paciente.id == id:
+                                pacienteEscolhido = paciente
+
+                        classFrontDesk.ListarHorariosPaciente(pacienteEscolhido.cpf)
+
+                        clearTerminal()
+                    except:
+                        print("\nNão há paciente cadastrado com esse ID!!")
+                        clearTerminal()
+
+
+            elif menu == 11:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Programa da Recepção - Verifica se paciente tem horário na sessão atual\n")
+
+                pacientes = classFrontDesk.ListarPacientes()
+
+                if not pacientes:
+                    print("\nNão há pacientes cadastrados")
+
+                else:
+                    try:
+                        print("\nTabela de Pacientes:")
+                        print("---------------------------------------------------")
+                        print(f" ID | {'Nome':25}    |  CPF ")
+                        print("---------------------------------------------------")
+                        for paciente in pacientes:
+                            id = paciente.id
+                            nome = paciente.nome
+                            cpf = paciente.cpf
+
+                            print(f" {id:2} | {nome:25}    | {cpf} ")
+                            print("---------------------------------------------------")
+
+                        id = int(input("\nDigite o id do paciente desejado: "))
+
+                        pacienteEscolhido = {}
+
+                        for paciente in pacientes:
+                            if paciente.id == id:
+                                pacienteEscolhido = paciente
+
+                        classFrontDesk.ListarHorariosPaciente(pacienteEscolhido.cpf)
+
+                        clearTerminal()
+                    except:
+                        print("\nNão há paciente cadastrado com esse ID!!")
+                        clearTerminal()
+
 
             elif menu == 0:
                 os.system('cls' if os.name == 'nt' else 'clear')

@@ -60,7 +60,6 @@ class FrontDesk(Clinica):
 
             paciente.Criar()
 
-
     def MarcarHorarioDoPaciente(self, idSessao, cpf):
         paciente = Paciente.BuscarPeloCPF(self, cpf)
 
@@ -92,29 +91,14 @@ class FrontDesk(Clinica):
     def ListarPacientes(self):
         pacientes = Paciente.BuscarTodos(self)
 
-        if not pacientes:
-            print("\nNão há pacientes cadastrados")
-        else:
-            print("\nTabela de Pacientes:")
-            print("---------------------------------------------------")
-            print(f" ID | {'Nome':25}    |  CPF ")
-            print("---------------------------------------------------")
-
-            for paciente in pacientes:
-                id = paciente.id
-                nome = paciente.nome
-                cpf = paciente.cpf
-
-                print(f" {id:2} | {nome:25}    | {cpf} ")
-
-            print("---------------------------------------------------")
+        return pacientes
 
     def ListarHorariosPaciente(self, cpf):
         try:
             paciente = Paciente.BuscarPeloCPF(self, cpf)
 
             if not paciente:
-                raise ValueError("Não há paciente cadastrado com esse CPF!")
+                raise ValueError("\nNão há paciente cadastrado com esse ID!")
 
             horarios = []
             sessoes = Sessao.BuscarTodos(self)
@@ -124,7 +108,7 @@ class FrontDesk(Clinica):
                     horarios.append({"data": sessao.data, "horario": sessao.horario})
 
             if not horarios:
-                raise ValueError("Não há horários cadastrados para esse paciente!")
+                raise ValueError("\nNão há horários cadastrados para esse paciente!")
 
             print("\nHorários:")
             print("-----------------------")
@@ -135,4 +119,4 @@ class FrontDesk(Clinica):
                 print("-----------------------")
 
         except Exception as e:
-            print(f"Erro: {e}")
+            print(f"{e}")
