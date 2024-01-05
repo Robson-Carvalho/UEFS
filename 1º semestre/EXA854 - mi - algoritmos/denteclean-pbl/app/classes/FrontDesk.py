@@ -233,3 +233,31 @@ class FrontDesk(Clinica):
                         return
 
             print("\nNão há sessão cadastrada para hoje.")
+
+    def ProximoPacienteParaAtendimento(self):
+        sessoes = Sessao.BuscarTodos(self)
+
+        if not sessoes:
+            print("A clinica ainda não possui nenhuma sessão cadastrada.")
+            return
+        else:
+            dataAtual = datetime.now()
+            dataAtual = dataAtual.strftime("%d/%m/%Y")
+            for sessao in sessoes:
+                if sessao.data == dataAtual:
+                    if sessao.fila_de_atendimento:
+                        proximoPaciente = sessao.fila_de_atendimento[0]
+
+                        paciente = Paciente.BuscarPeloID(self, proximoPaciente)
+
+                        if not paciente:
+                            print("Erro ao buscar paciente.")
+                            return
+
+                        print(f"O próximo paciente para atendimento é {paciente.nome}.")
+                        return
+                    else:
+                        print(f"Não há pacientes na fila de atendimento atual.")
+                        return
+
+        print("Não há sessão cadastrada para hoje.")

@@ -13,7 +13,7 @@ def frontDesk():
     start = True
     while start:
         try:
-            menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n11 - Verificar se paciente tem horário na sessão atual\n12 - Colocar paciente na fila de atendimento\n0 - Sair\n\nEscolha uma opção: "))
+            menu = int(input("Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n11 - Verificar se paciente tem horário na sessão atual\n12 - Colocar paciente na fila de atendimento\n13 - Listar próximo paciente da fila de atendimento\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -137,6 +137,14 @@ def frontDesk():
                 cpf = input("Digite o número do CPF do paciente: ")
 
                 classFrontDesk.ColocarNaFilaDeAtendimento(cpf)
+
+                clearTerminal()
+
+            elif menu == 13:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Programa da Recepção - Próximo paciente a ser atendido\n")
+
+                classFrontDesk.ProximoPacienteParaAtendimento()
 
                 clearTerminal()
 
