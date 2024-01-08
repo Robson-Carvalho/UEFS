@@ -1,6 +1,7 @@
 from classes.Patient import Paciente
 from.Session import Sessao
-class Clinica:
+
+class  Clinica:
     def IniciarAtendimento(self, data, horario):
         Sessao.IniciarAtendimento(self, data, horario)
 

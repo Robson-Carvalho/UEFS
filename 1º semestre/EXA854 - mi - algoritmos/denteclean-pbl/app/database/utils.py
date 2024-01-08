@@ -2,7 +2,6 @@ import os
 import json
 
 diretorioAtual = os.path.dirname(os.path.abspath(__file__))
-
 caminhoArquivoSessoes = os.path.join(diretorioAtual, 'sessions.json')
 caminhoArquivoPacientes = os.path.join(diretorioAtual, 'patients.json')
 

@@ -1,10 +1,12 @@
 from datetime import datetime
 
+from functions.dentistMenu import dentistMenu
+
 from classes.Clinic import Clinica
 from classes.Session import Sessao
 class Dentista(Clinica):
-    def BuscarSessaoAtual(self):
-        sessoes = Sessao.BuscarTodos(self)
+    def BuscarSessaoAtual():
+        sessoes = Sessao.BuscarTodos()
 
         if not sessoes:
             return None
@@ -18,6 +20,5 @@ class Dentista(Clinica):
 
         return None
 
-
-    def AtenderProximoPaciente(self):
-        print("oi")
+    def AtenderProximoPaciente():
+        dentistMenu()

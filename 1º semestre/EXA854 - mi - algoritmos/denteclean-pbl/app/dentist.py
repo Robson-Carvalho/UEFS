@@ -15,6 +15,7 @@ def dentist():
     start = True
     while start:
         try:
+
             menu = int(input(f"Programa do Dentista\n\n1 - Localizar sessão\n2 - Iniciar sessão\n3 - Atender próximo paciente\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
@@ -43,7 +44,7 @@ def dentist():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("Programa da Recepção - Atender próximo paciente\n")
 
-                dentistMenu()
+                classDentist.AtenderProximoPaciente()
 
             elif menu == 0:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -55,6 +56,6 @@ def dentist():
 
         except ValueError as e:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Erro! Por favor, tente novamente. {e}\n")
+            print(f"Mensagem de erro: {e}\n")
 
 

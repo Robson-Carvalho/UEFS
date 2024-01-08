@@ -23,9 +23,10 @@ def main():
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
+
         except ValueError as Error:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"\nError: {Error}! Por favor, tente novamente com as opções fornecidas\n")
+            print(f"\nMensagem de erro: {Error}!\n")
 
 if __name__== "__main__":
     main()

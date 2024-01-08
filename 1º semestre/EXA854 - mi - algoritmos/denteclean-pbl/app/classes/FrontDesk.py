@@ -106,7 +106,7 @@ class FrontDesk(Clinica):
             print(f"\nSessão já está completa! Por favor, criei uma nova sessão para o cadastro de {paciente.nome}")
             return
 
-        if intIdSessao in sessao.fila_de_pacientes:
+        if intIdSessao in sessao.fila_de_pacientes or intIdSessao in sessao.fila_de_atendimento or intIdSessao in sessao.consultados:
             print(f"\nO paciente {paciente.nome} já tem horário marcado para essa sesão! Por favor, marque para uma próxima sessão.")
             return
 
