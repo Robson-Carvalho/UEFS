@@ -47,10 +47,10 @@ class FrontDesk(Clinica):
                 print(f" ID | {'Nome':25}    |  CPF ")
                 print("---------------------------------------------------")
                 for consultado_id in sessao.consultados:
-                    paciente = Paciente.BuscarPeloID(consultado_id)
+                    paciente = Paciente.BuscarPeloID(self, consultado_id)
 
                     if paciente:
-                        print(f" {id:2} | {paciente.nome:25}    | {paciente.cpf} ")
+                        print(f" {paciente.id:2} | {paciente.nome:25}    | {paciente.cpf} ")
                         print("---------------------------------------------------")
 
     def CadastrarPaciente(self, nome, cpf):
