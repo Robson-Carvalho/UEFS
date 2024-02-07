@@ -52,10 +52,10 @@ def dentist():
 
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print("Opção inválida! Por favor, tente novamente com as opções fornecidas\n")
+                print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
 
         except ValueError as e:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Mensagem de erro: {e}\n")
+            print("\nOpção inválida. Por favor, tente novamente!\n")
 
 

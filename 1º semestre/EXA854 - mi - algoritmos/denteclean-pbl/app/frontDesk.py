@@ -12,7 +12,7 @@ def frontDesk():
     os.system('cls' if os.name == 'nt' else 'clear')
     start = True
     while start:
-
+        try:
             menu = int(input(f"Programa da Recepção\n\n1 - Criar sessão\n2 - Listar sessões\n3 - Buscar sessão\n4 - Consultas de uma sessão\n5 - Iniciar sessão\n6 - Encerrar sessão\n7 - Cadastrar paciente\n8 - Marca horário para paciente\n9 - Listar pacientes\n10 - Horários do paciente\n11 - Verificar se paciente tem horário na sessão atual\n12 - Colocar paciente na fila de atendimento\n13 - Listar próximo paciente da fila de atendimento\n0 - Sair\n\nEscolha uma opção: "))
 
             if menu == 1:
@@ -155,4 +155,10 @@ def frontDesk():
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nOpção inválida! Por favor, tente novamente com as opções fornecidas\n")
+
+        except ValueError as e:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("\nOpção inválida. Por favor, tente novamente!\n")
+
+
 

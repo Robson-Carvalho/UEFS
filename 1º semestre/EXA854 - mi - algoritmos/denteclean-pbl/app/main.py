@@ -26,7 +26,7 @@ def main():
 
         except ValueError as Error:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"\nMensagem de erro: {Error}!\n")
+            print(f"\nValor inválido. Por favor, tente novamente!\n")
 
 if __name__== "__main__":
     main()
