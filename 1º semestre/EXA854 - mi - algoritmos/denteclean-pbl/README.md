@@ -24,35 +24,29 @@ atendimento."
 
 ## Requisitos
 
-- Python 3.x
-- [Pip](https://pip.pypa.io/en/stable/installation/) (geralmente incluído na instalação do Python)
+-   Python 3.x
+-   [Pip](https://pip.pypa.io/en/stable/installation/) (geralmente incluído na instalação do Python)
 
 ## Instalação
 
 1. Clone o repositório:
 
-   ```bash
-   git clone https://github.com/Robson-Carvalho/denteclean-pbl-uefs.git
-   ```
+    ```bash
+    git clone https://github.com/Robson-Carvalho/UEFS.git
+    ```
 
 2. Navegue até o diretório do projeto:
 
-   ```bash
-   cd denteclean-pbl-uefs
-   ```
+    ```bash
+    cd 'UEFS/1º semestre/EXA854 - mi - algoritmos/denteclean-pbl/app'
+    ```
 
 ## Execução
 
 Há duas formas de executar o projeto, na versão para dentistas e para recepção:
 
-1. Executar o projeto para dentista:
+1. Executae o arquivo principal:
 
-   ```bash
-   python openDentistSystem.py
-   ```
-
-2. Executar o projeto para recepção:
-
-   ```bash
-   python openReceptionSystem.py
-   ```
+    ```bash
+    python3 main.py
+    ```
