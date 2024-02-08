@@ -36,3 +36,17 @@ def getData():
       print("\nValor inválido! Por favor, digite um número válido.\n")
 
   return f"{day:02d}/{month:02d}/{year:02d}"
+
+"""
+Autor: Robson Carvalho de Souza
+
+Componente Curricular: EXA 854-MI-Algoritmos
+
+Concluido em: 08/02/2024
+
+Declaro que este código foi elaborado por mim de forma individual e não contém nenhum
+trecho de código de outro colega ou de outro autor, tais como provindos de livros e
+apostilas, e páginas ou documentos eletrônicos da Internet. Qualquer trecho de código
+de outra autoria que não a minha está destacado com uma citação para o autor e a fonte
+do código, e estou ciente que estes trechos não serão considerados para fins de avaliação.
+"""
