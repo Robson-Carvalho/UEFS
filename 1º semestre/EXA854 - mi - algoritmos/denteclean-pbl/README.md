@@ -26,6 +26,7 @@ atendimento."
 
 -   Python 3.x
 -   [Pip](https://pip.pypa.io/en/stable/installation/) (geralmente incluído na instalação do Python)
+-   Windows ou Linux (o projeto foi desenvolvido para que seja possível executar em ambos os sistemas operacionais)
 
 ## Instalação
 
@@ -43,9 +44,7 @@ atendimento."
 
 ## Execução
 
-Há duas formas de executar o projeto, na versão para dentistas e para recepção:
-
-1. Executae o arquivo principal:
+1. Execute o arquivo principal:
 
     ```bash
     python3 main.py
